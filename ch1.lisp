@@ -8,6 +8,8 @@
 (print (* 9 6))
 (print (/ 5 2))
 (print (/ 5.0 2))
+(print (/ 4))
+(print (/ 4.0))
 (print (abs -143))
 (print (sqrt 144))
 
