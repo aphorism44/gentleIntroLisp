@@ -85,4 +85,34 @@
 
 ;4.17 predicate, returns T if first input is BOY or GIRL AND
 ;second input is CHILD; OR firsrt input is MAN or WOMAN AND second
-;input is ADULY
+;input is ADULT
+(defun gender-id(a b) 
+	(cond
+		((and (or (equal a 'boy)(equal a 'girl)) (equal b 'child)) t)
+		((and (or (equal a 'man)(equal a 'woman)) (equal b 'adult)) t)
+		(t nil)))
+		
+;4.18 - ROCK-PAPER-SCISSORS referee; outputs which plater wins
+(defun rock-paper-scissors (p1 p2)
+	(cond
+		( (or (and (equal p1 'paper) (equal p2 'rock)) 
+			(and (equal p1 'scissors)(equal p2 'paper)) 
+			(and (equal p1 'rock)(equal p2 'scissors))) 'first-wins)
+		( (or (and (equal p2 'paper) (equal p1 'rock)) 
+			(and (equal p2 'scissors)(equal p1 'paper)) 
+			(and (equal p2 'rock)(equal p1 'scissors))) 'second-wins)
+			(t 'tie)))
+
+;4.20 write COMPARE using IF, and then using AND/OR (not COND)
+(defun compare-if (a b)
+	(if (> a b) 'first-greater-than-second
+		(if (< a b ) 'second-greater-than-first 'equal)
+		))
+
+(defun compare-and-or (a b)
+	(or  
+		(and (> a b) 'first-greater-than-second) 
+		(and (< a b) 'second-greater-than-first) 
+		(and (= a b) 'equal)))
+
+;advanced lesson exercises
