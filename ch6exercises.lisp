@@ -35,3 +35,41 @@
 (defun make-palindrome (list)
 	(append list (reverse list)))
 	
+;6.15 CONTAINS-ARTICLE-P, return T/nil if includes "the," "a," and "an"
+; use intersection, then member-or (if possible, do member-and)
+(defun contains-article-p (list)
+	(> (length (intersection list '(the a an))) 0))
+
+(defun contains-article-p-memberor (list)
+	(or 
+		(> (length (member 'a list)) 0)
+		(> (length (member 'an list)) 0)
+		(> (length (member 'the list)) 0)))
+		
+(defun contains-article-p-memberand (list)
+	(not (and
+		(not (member 'the list))
+		(not (member 'a list))
+		(not (member 'an list)))))
+	
+	
+;6.19 ADD-VOWELS - just add a/e/i/o/u to a list; order doesn't matter
+(defun add-vowels (set) 
+	(union '(a e i o u) set))
+	
+;6.21 MY-SUBSETP - check if one set is subset of another with set-difference
+(defun my-subsetp (setA setB)
+	(equal nil (set-difference setA setB)))
+
+;6.24 SET-EQUAL, check if 2 sets are equal (each is subset of the other)
+(defun set-equal (setA setB)
+	(and (subsetp setA setB) (subsetp setB setA)))
+	
+;6.25 PROPER-SUBSET, not a subset if the sets are the same size (equal)
+(defun proper-subset (setA setB)
+	(and (subsetp setA setB) (not (set-equal setA setB))))
+	
+;keyboard exercise - 
+;6.26 - take 2 lists and return items in common
+
+
