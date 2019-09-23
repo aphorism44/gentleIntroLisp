@@ -52,7 +52,6 @@
 		(not (member 'a list))
 		(not (member 'an list)))))
 	
-	
 ;6.19 ADD-VOWELS - just add a/e/i/o/u to a list; order doesn't matter
 (defun add-vowels (set) 
 	(union '(a e i o u) set))
@@ -69,7 +68,88 @@
 (defun proper-subset (setA setB)
 	(and (subsetp setA setB) (not (set-equal setA setB))))
 	
-;keyboard exercise - 
-;6.26 - take 2 lists and return items in common
+;mini keyboard exercise - 6.26
+; take 2 lists and return items in common
+; format is (a b c -vs- c d e)
+;a. 0 RIGHT-SIDE - return evertything to right of '-vs-'
+(defun right-side (list)
+	(cdr (member '-vs- list)))
+	
+;b. LEFT-SIDE - to the left
+(defun left-side (list)
+	(cdr (member '-vs- (reverse list))))
+	
+;c. COUNT-COMMON - returns number of items left and right have in common
+(defun count-common(list) 
+	(intersection (right-side list) (left-side list)))
+	
+;d. COMPARE - returns (n COMMON FEATURES) where n = count of common items
+(defun compare (list)
+	(cons (length (count-common list)) '(common features)))
+	
+;6.30 - table BOOKS
+(setf sf-books
+	'((i-robot isaac-asimov)
+	(dune frank-herbert)
+	(nova samuel-delany)
+	(neuromancer william-gibson)
+	(the-demolished-man alfred-bester)))
 
+
+;6.31 WHO-WROTE - input=book, output-author	
+(defun who-wrote (book)
+	(second (assoc book sf-books)))
+	
+;6.33 WHAT-WROTE - use 6.32 suggestion
+(setf sf-books-reverse
+	'((i-robot . isaac-asimov)
+	(dune . frank-herbert)
+	(nova . samuel-delany)
+	(neuromancer . william-gibson)
+	(the-demolished-man . alfred-bester)))
+
+(defun what-wrote (author)
+	(car (rassoc author sf-books-reverse)))
+
+;mini keyboard exercise
+;6.35 - sim nerd - 5 states {sleeping, eating, waiting for a computer, programming, debugging}
+
+;a - table of sequential states
+(setf nerd-states
+	'((sleeping eating)
+	(eating waiting-for-a-computer)
+	(waiting-for-a-computer programming)
+	(programming debugging)
+	(debugging sleeping)))
+	
+;b - NERDUS - take in state, get next state
+(defun nerdus (state)
+	(second (assoc state nerd-states)))
+
+;c - SLEEPLESS-NERD - never sleeps - goes from debugging to eating
+(defun sleepless-nerd (state)
+	(if (equal state 'debugging) (nerdus 'sleeping) (nerdus state)))
+
+;d - NERD-ON-CAFFEINE - jumps two states instead of one
+(defun nerd-on-caffeine (state)
+	(nerdus (nerdus state)))
+
+;review exercises
+;6.36 - SWAP - exchange first and last member of list
+(defun swap (list)
+	(append (last list) (reverse (cons (first list) (cdr (reverse (remove (first list) list)))))))
+
+;6.38 ROTATE-LEFT and ROTATE-RIGHT; left would change (a b c d e) to (b c d e a), etc
+;right changes (a b c d e) to (e a b c d)
+(defun rotate-left (list)
+	(reverse (cons (first list) (reverse (cdr list)))))
+	
+(defun rotate-right (list)
+	(append (last list) (reverse (cdr (reverse list)))))
+
+
+;CHECK THE OSs FOR sdraw.generic:
+; MAC - YES
+; WINDOWS 10 - 
+; UBUNTU 18 - 
 
