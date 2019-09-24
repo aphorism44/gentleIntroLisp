@@ -153,4 +153,9 @@
 ; WINDOWS 10 - 
 ; UBUNTU 18 - 
 
-;
+;advanced topics
+
+;6.42 ROYAL-WE, change I to WE
+(defun royal-we (list)
+	(subst 'we 'i list))
+
