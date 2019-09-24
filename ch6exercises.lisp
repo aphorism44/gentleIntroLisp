@@ -148,8 +148,9 @@
 	(append (last list) (reverse (cdr (reverse list)))))
 
 
-;CHECK THE OSs FOR sdraw.generic:
+;CHECK THE OSs FOR sdraw.generic, (sdraw-loop)
 ; MAC - YES
 ; WINDOWS 10 - 
 ; UBUNTU 18 - 
 
+;

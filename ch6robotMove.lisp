@@ -25,7 +25,8 @@
 	(front-stairs 
 		(north upstairs-bedroom)
 		(south living-room))
-	(library (east upstairs-bedroom)
+	(library 
+		(east upstairs-bedroom)
 		(south back-stairs))))
 		
 (setf loc 'pantry)
@@ -42,6 +43,8 @@
 
 ;c. SET+ROBOT-LOCATION - robbie the robot is teleported here
 (defun teleport-robot (room)
+	"Moved the robot directly to the ROOM listed, without
+	the need to move through the table-map."
 	(setf loc room))
 
 ;d. HOW-MANY-CHOICES - moves from current location
@@ -60,3 +63,18 @@
 	(equal 'front-stairs loc)
 	(equal 'back-stairs loc)))
 
+;f. - WHERE, add loc with appropriate text-list
+(defun where() 
+	(append '(the robot is) 
+		(cond 
+			((upstairsp) '(upstairs in the))
+			((onstairsp) '(on the))  
+			(t '(downstairs in the))
+		)
+		(list loc)))
+	
+;g. - MOVE	- use LOOK; if nothing there, print you hit a wall; else change location and WHERE
+(defun move (direction)
+	(let ((next-room (look loc direction)))  
+	(if (equal nil next-room) '(ouch! the robot hit a wall) (and (teleport-robot next-room) (where)))))
+	
