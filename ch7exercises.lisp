@@ -21,5 +21,12 @@
 ;(mapcar #'greater-than-five-p '(2 0 3 4 0 -5 -6))
 
 ;7.7
-
 (mapcar #'(lambda (word) (if (equal 'down word) 'up 'down)) '(up down up up))
+
+;7.8 FIND-ROUGH - function takes list X and number K, then returns first item in X that's +=10 to K
+(defun find-rough (x k)
+	(find-if #'(lambda (n) (or (< n (+ k 10)) (> n (- k 10)))) x))
+	
+;7.9 FIND-NESTED, return first elemebnt of a list that ia itself a non-NIL list
+(defun find-nested (list)
+	(find-if #'(lambda (l)  (if (and (equal 'cons (type-of l)) (> (length l) 0))  (car l)))))
