@@ -25,8 +25,25 @@
 
 ;7.8 FIND-ROUGH - function takes list X and number K, then returns first item in X that's +=10 to K
 (defun find-rough (x k)
-	(find-if #'(lambda (n) (or (< n (+ k 10)) (> n (- k 10)))) x))
+	(find-if #'(lambda (n) (and (< n (+ k 10)) (> n (- k 10)))) x))
 	
 ;7.9 FIND-NESTED, return first elemebnt of a list that ia itself a non-NIL list
 (defun find-nested (list)
-	(find-if #'(lambda (l)  (if (and (equal 'cons (type-of l)) (> (length l) 0))  (car l)))))
+	(first (find-if #'(lambda (l) (and (equal 'cons (type-of l)) (> (length l) 0))) list)))
+
+;mini-keyboard exercises
+;7.10 - change song from one key to another
+;a. - table NOTE-TABLE
+(setf note-table
+	'((c 1) (c-sharp 2) (d 3) (d-sharp 4) (e 5) (f 6)
+	(f-sharp 7) (g 8) (g-sharp 9) (a 10) (a-sharp 11) (b 12)))
+	
+;b. NOTE-NUMBERS, takes a list of notes as input and returns corresponding list of numbers
+(defun note-numbers (note-list)
+	(mapcar #'(lambda (n) (second (assoc n note-table))) note-list))
+
+;c. NUMBER-NOTES - takes in numbers, returns notes
+(defun number-notes (number-list)
+	(let ((number-table (mapcar #'(lambda (l) (list (second l) (first l))) note-table)))  
+	(mapcar #'(lambda (n) (second (assoc n number-table))) number-list)
+	))
