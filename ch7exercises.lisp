@@ -66,3 +66,23 @@
 (defun transpose-notes (n note-list)
 	(number-to-notes (normalize-note-numbers (raise-note-numbers n (note-to-numbers note-list)))))
 
+
+;7.11 function to remove numbers from list greater than 1 and less than 5
+(defun remove-to-five (list) 
+	(remove-if #'(lambda (n) (and (> n 1) (< n 5))) list))
+	
+;7.12 function that counts the number of times "the" appers in list
+(defun count-ands (list)
+	(length (remove-if-not #'(lambda (e) (equal e 'and)) list)))
+	
+;7.13 returns a list of items from a different list of eqactly length 2 (?)
+(defun count-length-two (list)
+	(remove-if-not #'(lambda(e) (= (length e) 2)) list))
+	
+;7.14 - write INTERSECTION and UNION functions based on REMOVE-IF and REMOVE-IF-NOT
+(defun intersection-remove (listA listB)
+	(remove-if-not #'(lambda (e) (member e listB)) listA))
+	
+(defun union-remove (listA listB)
+	(append listA (remove-if #'(lambda (e) (member e listA)) listB)))
+	
