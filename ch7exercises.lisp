@@ -38,12 +38,31 @@
 	'((c 1) (c-sharp 2) (d 3) (d-sharp 4) (e 5) (f 6)
 	(f-sharp 7) (g 8) (g-sharp 9) (a 10) (a-sharp 11) (b 12)))
 	
-;b. NOTE-NUMBERS, takes a list of notes as input and returns corresponding list of numbers
-(defun note-numbers (note-list)
+;b. NOTE-TO-NUMBERS, takes a list of notes as input and returns corresponding list of numbers
+(defun note-to-numbers (note-list)
 	(mapcar #'(lambda (n) (second (assoc n note-table))) note-list))
 
-;c. NUMBER-NOTES - takes in numbers, returns notes
-(defun number-notes (number-list)
+;c. NUMBER-TO-NOTES - takes in numbers, returns notes
+(defun number-to-notes (number-list)
 	(let ((number-table (mapcar #'(lambda (l) (list (second l) (first l))) note-table)))  
-	(mapcar #'(lambda (n) (second (assoc n number-table))) number-list)
-	))
+	(mapcar #'(lambda (n) (second (assoc n number-table))) number-list)))
+
+;e. RAISE-NOTE-NUMBERS; raises each note by n (WARN - doesn't account for higher octaves yet)
+(defun raise-note-numbers (n n-list)
+	(mapcar #'(lambda (e) (+ e n)) n-list))()
+		
+;f. NORMALIZE-NOTE-NUMBERS; raising notes above 12 = higher octave; n > 12 = n - 12; n < 1 = n + 12		
+(defun normalize-note-numbers (num-list)
+	(mapcar #'(lambda (n)
+	(cond 
+		((> n 12) (- n 12))
+		((< n 1) (+ n 12))
+		('t n))
+		) num-list))
+
+;g. TRANSPOSE-NOTES; takes in N and a song (A G F G..) and returns song transposed by n half steps
+;use NOTE-NUMBERS, NUMBER-NOTES, RAISE-NOTES and NORMALIZE-NOTES
+
+(defun transpose-notes (n note-list)
+	(number-to-notes (normalize-note-numbers (raise-note-numbers n (note-to-numbers note-list)))))
+
