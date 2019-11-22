@@ -86,3 +86,61 @@
 (defun union-remove (listA listB)
 	(append listA (remove-if #'(lambda (e) (member e listA)) listB)))
 	
+;7.15 mini-keyboard exercise, playing cards with assoc
+;a. RANK and SUITE, returns of card '(2 CLUBS)
+(defun rank (card)
+	(car card))
+(defun suit (card)
+	(cadr card))
+
+;b. COUNT-SUIT, takes in a suit and hand of cards, and returns number of cards in suit
+(setf my-hand '(
+	(3 hearts)
+	(5 clubs)
+	(2 diamonds)
+	(4 diamonds)
+	(ace spades)))
+	
+(defun count-suit (suitCheck cardHand)
+	(length (remove-if-not #'(lambda (card) (equal (suit card) suitCheck)) cardHand)))
+
+;c. COLOR-OF, retrieves color of card
+(setf colors '(
+	(clubs black)
+	(diamonds red)
+	(hearts red)
+	(spades black)))
+
+(defun color-of(card)
+	(second (assoc (suit card) colors)))
+
+;d FIRST-RED - returns first red card of hand (or NIL)
+(defun first-red (cardHand) 
+	(find-if #'(lambda (card) (equal (color-of card) 'red)) cardHand))
+	
+;e BLACK-CARDS - returns list of black cards in a hand
+(defun black-cards (cardHand)
+	(remove-if #'(lambda (card) (equal (color-of card) 'red)) cardHand))
+	
+;f WHAT-RANKS - takes suit and hand, returns  all cards of that suit
+(defun what-ranks (checkSuit cardHand)
+	(mapcar #'car (remove-if-not #'(lambda (card) (equal (suit card) checkSuit)) cardHand)))
+
+;g. HIGHER-RANK - takes in 2 cards, and returns T if first card has higher rank than second
+;HINT - use BEFOREP, p. 171
+(setf all-ranks 
+	'(2 3 4 5 6 7 8 9 10 jack queen king ace))
+	
+;WARN - have to add BEFOREP
+(defun beforep (x y l)
+	"Returns true if X appears before Y in L"
+	(member y (member x l)))
+	
+(defun higher-rank (cardA cardB)
+	(< (length (beforep (rank cardA) (rank cardB) all-ranks)) 1))
+
+;h HIGH-CARD, returns highest ranked card in the hand
+;HINT - use FIND-IF and ASSOC
+(defun high-card (cardHand)
+;	(find-if #'(lambda (card) ( (reverse all-ranks)    )) cardHand)
+	)
