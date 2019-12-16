@@ -137,10 +137,80 @@
 	(member y (member x l)))
 	
 (defun higher-rank (cardA cardB)
-	(< (length (beforep (rank cardA) (rank cardB) all-ranks)) 1))
+	(if (< (length (beforep (rank cardA) (rank cardB) all-ranks)) 1)
+	cardA cardB))
 
 ;h HIGH-CARD, returns highest ranked card in the hand
-;HINT - use FIND-IF and ASSOC
+;HINT - use FIND-IF and ASSOC, OR REDUCE (next chapter)
+
 (defun high-card (cardHand)
-;	(find-if #'(lambda (card) ( (reverse all-ranks)    )) cardHand)
+	(reduce #'higher-rank cardHand))
+	
+;7.16 COMBINE-SETS, collapse list of set into 1 set with reduce (not append)
+(defun combine-sets (set-list)
+	(reduce #'union set-list))
+	
+;7.17 TOTAL-LENGTH, takes in list of lists, returns total length of all of them
+(defun total-length (big-list)
+	 (reduce #'+ (mapcar #'(lambda (l) (length l)) big-list)))
+
+
+;7.19 ALL-ODD, T if whole list is odd	
+(defun all-odd(list)
+	(every #'oddp list))
+
+;7.20 NONE-ODD
+(defun none-odd(list)
+	(every #'evenp list))
+
+;7.21 NOT-ALL-ODD	
+(defun not-all-odd(list)
+	(not (all-odd list)))
+
+;7.22 NOT-NONE-ODD	
+(defun not-none-odd(list)
+	(not (none-odd list)))
+
+;Keyboard exercise, shape knowledge representation
+;database = list of assertions; pattern-matcher = searches database
+;NOTE - this looks like PROLOG...
+(setf shape-database '(
+	(b1 shape brick)
+	(b1 color green)
+	(b1 size small)
+	(b1 supported-by b2)
+	(b1 supported-by b3)
+	(b2 shape brick)
+	(b2 color red)
+	(b2 size small)
+	(b2 supports b1)
+	(b2 left-of b3)
+	(b3 shape brick)
+	(b3 color red)
+	(b3 size small)
+	(b3 supports b1)
+	(b3 right-of b2)
+	(b4 shape pyramid)
+	(b4 color blue)
+	(b4 size large)
+	(b4 supported-by b5)
+	(b5 shape cube)
+	(b5 color green)
+	(b5 size large)
+	(b5 supports b4)
+	(b6 shape brick)
+	(b6 color purple)
+	(b6 size large)))
+
+;7.29 
+;a. MATCH-ELEMENT, takes 2 symbols input; if 2 are equal (or second a ?) returns T else NIL
+;e.g., 'red 'red  and 'red '? returns T
+(defun match-element (s1 s2)
+	(or (equal s1 s2) (equal s2 '?)))
+;b. MATCH-TRIPLE, takes assertion, pattern; T if assertion matches pattern
+; e.g., '(b2 color red) '(b2 color ?) are T; '(b2 color red) '(b2 color blue)
+(defun match-triple (l1 l2)
 	)
+
+
+
