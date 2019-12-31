@@ -174,7 +174,7 @@
 ;Keyboard exercise, shape knowledge representation
 ;database = list of assertions; pattern-matcher = searches database
 ;NOTE - this looks like PROLOG...
-(setf shape-database '(
+(setf block-database '(
 	(b1 shape brick)
 	(b1 color green)
 	(b1 size small)
@@ -208,9 +208,35 @@
 (defun match-element (s1 s2)
 	(or (equal s1 s2) (equal s2 '?)))
 ;b. MATCH-TRIPLE, takes assertion, pattern; T if assertion matches pattern
+(defun match-triple (assert pattern)
+	(and 
+		(match-element (car assert) (car pattern))
+		(match-element (cadr assert) (cadr pattern))
+		(match-element (caddr assert) (caddr pattern))
+		))
+
+;c. FETCH - grab all lists in DB that match pattern
+(defun fetch (pattern)
+	(remove-if-not #'(lambda (sublist) (match-triple sublist pattern)) block-database))
+
+;e. take block name as input, return pattern asking f/color of block, like (B3 COLOR ?)
+(defun get-color-pattern (block)
+	(list block 'color '?))
+	
+;f. SUPPORTERS, takes block input and returns list of blocks that support it
+(defun supporters (block)
+	(mapcar #'car (fetch (list '? 'supports block))))
+	
+;g. SUPP-CUBE, block input, returns T if supported by any _cube_ (use SUPPORTERS)
+(defun supp-cube (block)
+	(find-if #'(lambda (support) (match-triple '() '()   ))  (supporters block)))
+
+
+
 ; e.g., '(b2 color red) '(b2 color ?) are T; '(b2 color red) '(b2 color blue)
-(defun match-triple (l1 l2)
-	)
-
-
-
+;(defun match-triple (assertion-list)
+;	(find-if #'(lambda (item) 
+;		(match-element (cadr assertion-list) (cadr item)))
+;	 	(remove-if-not #'(lambda (sublist) (equal (car assertion-list) (car sublist))) shape-database)))
+	 
+	
