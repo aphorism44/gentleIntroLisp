@@ -1,4 +1,4 @@
-;Chapter 3 exercises
+;Chapter 3 exercises 
 
 ;3.5 - HALF, CUBE, ONEMOREP
 (defun half (x)
@@ -6,7 +6,7 @@
 
 (defun cube (x)
   (* x x x))
- 
+
 (defun onemorep (a b) (equal (+ 1 a) b))
 
 ;3.6 PYTHAG, x and y, return hypothenuse
@@ -27,7 +27,7 @@
 ;keyboard exercises
 
 ;3.22.c
-(defun myfun (a b) 
+(defun myfun (a b)
 	(list (list a) b))
 
 ;3.22.d
@@ -39,7 +39,7 @@
 	(list (car l) (+ 1 (cadr l)) (caddr l)))
 
 ;3.22.f
-(defun f-to-c (f) 
+(defun f-to-c (f)
 	(/ (* 5.0 (- f 32)) 9.0))
 
 ;advanced topic exercises
@@ -47,4 +47,3 @@
 ;(lambda (n) (* 2 n))
 ;(lambda (n) (* n n))
 ;(lambda (a b) (equal (- b 1) b ))
-

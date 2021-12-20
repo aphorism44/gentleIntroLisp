@@ -1,41 +1,41 @@
 (setf robot-rooms
-	'((living-room 
+	'((living-room
 		(north front-stairs)
 		(south dining-room)
 		(east kitchen))
-	(upstairs-bedroom 
+	(upstairs-bedroom
 		(west library)
 		(south front-stairs))
-	(dining-room 
+	(dining-room
 		(north living-room)
 		(east pantry)
 		(west downstairs-bedroom))
-	(kitchen 
+	(kitchen
 		(west living-room)
 		(south pantry))
-	(pantry 
+	(pantry
 		(north kitchen)
 		(west dining-room))
-	(downstairs-bedroom 
+	(downstairs-bedroom
 		(north back-stairs)
 		(east dining-room))
-	(back-stairs 
+	(back-stairs
 		(south downstairs-bedroom)
 		(north library))
-	(front-stairs 
+	(front-stairs
 		(north upstairs-bedroom)
 		(south living-room))
-	(library 
+	(library
 		(east upstairs-bedroom)
 		(south back-stairs))))
-		
+
 (setf loc 'pantry)
 
-;6.41 - set of functions to move robot around
+;6.41 - set of functions to move robot around 
 ;a - CHOICES - displays directions and rooms from a single room
 (defun choices(room)
 	(cdr (assoc room robot-rooms)))
-	
+
 ;b.LOOK - takes in dir and room, and tells what room robot looking into
 ;e.g., (look north pantry returns kitchen)
 (defun look(room direction)
@@ -48,7 +48,7 @@
 	(setf loc room))
 
 ;d. HOW-MANY-CHOICES - moves from current location
-(defun how-many-choices() 
+(defun how-many-choices()
 	(length (choices loc)))
 
 ;e - UPSTAIRSP - T if it's upstairs (DEFINED - library and upstairs bedroom)
@@ -57,24 +57,23 @@
 	(or
 	(equal 'upstairs-bedroom loc)
 	(equal 'library loc)))
-	
+
 (defun onstairsp()
 	(or
 	(equal 'front-stairs loc)
 	(equal 'back-stairs loc)))
 
 ;f. - WHERE, add loc with appropriate text-list
-(defun where() 
-	(append '(the robot is) 
-		(cond 
+(defun where()
+	(append '(the robot is)
+		(cond
 			((upstairsp) '(upstairs in the))
-			((onstairsp) '(on the))  
+			((onstairsp) '(on the))
 			(t '(downstairs in the))
 		)
 		(list loc)))
-	
+
 ;g. - MOVE	- use LOOK; if nothing there, print you hit a wall; else change location and WHERE
 (defun move (direction)
-	(let ((next-room (look loc direction)))  
+	(let ((next-room (look loc direction)))
 	(if (equal nil next-room) '(ouch! the robot hit a wall) (and (teleport-robot next-room) (where)))))
-	

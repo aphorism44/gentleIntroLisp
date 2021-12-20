@@ -3,7 +3,7 @@
 ;7.1- ADD1, then apply it to (1 3 5 7 9)
 (defun add1(n) (+ 1 n))
 
-;(mapcar #'add1 '(1 2 5 7 9))
+;(mapcar #'add1 '(1 2 5 7 9)) 
 
 ;7.2 use mapcar on DAILY-PLANET-STAFF table to extract SSNs
 

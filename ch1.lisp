@@ -1,4 +1,4 @@
-;;ch1 Exercises
+;;ch1 Exercises 
 
 ;1.4 SUB2, subtracts 2 from unput
 (defun sub1 (n) (- n 1))

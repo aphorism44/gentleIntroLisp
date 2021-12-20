@@ -1,4 +1,4 @@
-;chapter 2 exercises
+;chapter 2 exercises 
 
 ;2.8 write MY-THIRD using FIRST and two RESTs
 
@@ -27,10 +27,9 @@
 
 ;2.29 - UNARY-ADD1, increases unary number (in list) by 1
 (defun unary-add1 (l) (cons 'x l))
-	
+
 ;2.31 UNARY-ZEROP
 (defun unary-zerop (l) (equal 0 (length l)))
 
 ;2.32 UNARY-GREATERP, analagous to >
 (defun unary-greaterp (la lb) (> (length la) (length lb)))
-

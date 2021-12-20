@@ -1,10 +1,10 @@
-;;; -*- Mode: Lisp; Package: DTRACE -*-
+;;; -*- Mode: Lisp; Package: DTRACE -*- 
 
 ;;; DTRACE is a portable alternative to the Common Lisp TRACE and UNTRACE
 ;;; macros.  It offers a more detailed display than most tracing tools.
 ;;;
 ;;; From the book "Common Lisp:  A Gentle Introduction to
-;;;      Symbolic Computation" by David S. Touretzky.  
+;;;      Symbolic Computation" by David S. Touretzky.
 ;;; The Benjamin/Cummings Publishing Co., 1990.
 ;;;
 ;;; This is the generic version.  It should work in any legal Common Lisp.
@@ -21,7 +21,7 @@
 	   *dtrace-print-circle* *dtrace-print-pretty*
 	   *dtrace-print-array*))
 
-(in-package :dtrace)	    
+(in-package :dtrace)
 
 (eval-when (eval load)
   (shadowing-import '(dtrace duntrace) (find-package :common-lisp-user)))
@@ -152,7 +152,7 @@
 ;;; DUNTRACE and subordinate routines.
 
 (defmacro duntrace (&rest function-names)
-  "Turns off tracing for specified functions.  
+  "Turns off tracing for specified functions.
    With no args, turns off all tracing."
   (setf *trace-level* 0)  ;; safety precaution
   (list 'quote
@@ -184,11 +184,11 @@
 ;;;
 ;;; Display routines.
 ;;;
-;;; The code below generates vanilla character output for ordinary 
+;;; The code below generates vanilla character output for ordinary
 ;;; displays.  It can be replaced with special graphics code if the
 ;;; implementation permits, e.g., on a PC you can use the IBM graphic
-;;; character set to draw nicer-looking arrows.  On a color PC you 
-;;; can use different colors for arrows, for function names, for 
+;;; character set to draw nicer-looking arrows.  On a color PC you
+;;; can use different colors for arrows, for function names, for
 ;;; argument values, and so on.
 
 (defparameter *entry-arrow-string* "----")
@@ -244,8 +244,8 @@
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;
-;;; The function FETCH-ARGLIST is implementation dependent.  It 
-;;; returns the formal argument list of a function as it would 
+;;; The function FETCH-ARGLIST is implementation dependent.  It
+;;; returns the formal argument list of a function as it would
 ;;; appear in a DEFUN or lambda expression, including any lambda
 ;;; list keywords.  Here are versions of FETCH-ARGLIST for three
 ;;; Lisp implementations.
@@ -301,4 +301,3 @@
 		        original-x)
 		"Unkown object in function cell of ~S:  ~S" original-x x)
 	     '())))
-

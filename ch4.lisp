@@ -1,4 +1,4 @@
-;chapter 4 exercises
+;chapter 4 exercises 
 
 ;4.1 MAKE-EVEN; adds one to odd; leaves even unchanged
 (defun make-even(n)
