@@ -64,3 +64,37 @@
   (cond
     ((zerop y) x)
     (t  (rec-plus (add1 x) (sub1 y)))))
+
+;8.11 fibonacci
+(defun fib (n)
+  (cond
+    ((= n 0) 1)
+    ((= n 1) 1)
+    (t  (+ (fib (- n 1)) (fib (- n 2))))))
+
+;8.17 FIND-FIRST_ODD using double-test tail recursion
+(defun find-first-odd (list)
+  (cond ((null list) nil)
+        ((oddp (car list)) (car list))
+        (t (find-first-odd (cdr list)))))
+
+;8.18 LAST-ELEMENT - keeps looking until it finds a cell whose cdr is an atom
+; then return car of that cell; NOTE - not sure what this should return...
+(defun last-element (list)
+  (cond ((atom (cdr list)) (car list))
+        (t (last-element (cdr list)))))
+
+;8.21 - ADD-NUMS up to n
+(defun add-nums (n)
+  (cond ((= n 0) 0)
+        (t (+ n (add-nums (- n 1))))))
+
+;8.22 - ALL-EQUAL
+(defun all-equal (list)
+  (cond ((null (cdr list)) t)
+        (t  (and (equal (car list) (cadr list)) (all-equal (cdr list))))))
+
+;8.24 COUNT-DOWN, using list-consing from n to 1
+(defun count-down(n)
+  (cond ((= n 0) nil)
+  (t (cons n (count-down (- n 1))))))
