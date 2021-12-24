@@ -98,3 +98,54 @@
 (defun count-down(n)
   (cond ((= n 0) nil)
   (t (cons n (count-down (- n 1))))))
+
+;8.27 SQUARE-LIST - recursive; take in list, output list of squares
+(defun square-list (list)
+  (cond ((null list) nil)
+      (t (cons (* (car list) (car list)) (square-list (cdr list))))))
+
+;8.28 write efficient MY-NTH, n=0=first element of list
+(defun my-nth (n list)
+  (cond
+    ((null list) nil)
+    ((zerop n) (car list))
+    (t (my-nth (- n 1) (cdr list)))))
+
+;8.29 - MY-MEMBER, with 2 inputs, but only 1 changes per recursive call
+(defun my-member (x list)
+  (cond ((null list) nil)
+    ((equal x (car list)) t)
+    (t (my-member x (cdr list)))))
+
+;8.31 recursive COMPARE-LIST, returns SAME-LENGTH, FIRST-IS-LONGER,
+; or SECOND-IS-list
+(defun compare-list (list1 list2)
+  (cond ((and (null list1) (not (null list2))) 'second-is-longer)
+      ((and (null list2) (not (null list1))) 'first-is-longer)
+      ((and (null list1) (null list2)) 'same-length)
+      (t (compare-list (cdr list1) (cdr list2)))))
+
+;8.32 "conditional augmentation" SUM-NUMERIC-ELEMENTS
+(defun sum-numeric-elements (list)
+  (cond ((null list) 0)
+        ((numberp (car list)) (+ (car list) (sum-numeric-elements (cdr list))))
+        (t (sum-numeric-elements (cdr list)))))
+
+;8.33 MY-REMOVE
+(defun my-remove (x list)
+  (cond ((null list) nil)
+      ((equal x (car list)) (my-remove x (cdr list)))
+      (t (cons (car list) (my-remove x (cdr list))))))
+
+;8.34 MY-INTERSECTION
+(defun my-intersection (list1 list2)
+  (cond ((null list1) nil)
+        ((my-member (car list1) list2) (cons (car list1) (my-intersection (cdr list1) list2)))
+        (t (my-intersection (cdr list1) list2))))
+
+;8.35 MY-SET-DIFFERENCE
+(defun my-set-difference (list1 list2)
+  (cond ((null list1) list2)
+        ((my-member (car list1) list2)
+          (my-set-difference (my-remove (car list1) list1) (my-remove (car list1) list2)))
+        (t (cons (car list1) (my-set-difference (cdr list1) list2)))))
