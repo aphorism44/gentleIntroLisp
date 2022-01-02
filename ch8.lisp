@@ -149,3 +149,96 @@
         ((my-member (car list1) list2)
           (my-set-difference (my-remove (car list1) list1) (my-remove (car list1) list2)))
         (t (cons (car list1) (my-set-difference (cdr list1) list2)))))
+
+;8.39 - COUNT-ATOMS (use car/cdr recursion)
+(defun count-atoms (list)
+  (cond
+    ((atom list) 1)
+    (t (+ (count-atoms (car list)) (count-atoms (cdr list))))))
+
+;8.40 - COUNT-CONS, return number of cons cells
+(defun count-cons (list)
+  (cond
+    ((atom list) 0)
+    (t (+ 1 (count-cons (car list)) (count-cons (cdr list))))))
+
+;8.41 - SUM-TREE, only the numbers in a tree
+(defun sum-tree (list)
+  (cond ((numberp list) list)
+        ((atom list) 0)
+        (t (+ (sum-tree (car list)) (sum-tree (cdr list))))))
+
+;8.42 - MY-SUBST, recursive version of SUBST
+(defun my-subst (a b list)
+  (cond ((equal a list) b)
+        ((atom list) list)
+        (t (cons (my-subst a b (car list)) (my-subst a b (cdr list))))))
+
+;8.43 - FLATTEN - return in a 1D list all the items in a nested list
+(defun flatten (list)
+  (cond ((atom list) (list list))
+        (t (append (flatten (car list)) (flatten (cdr list))))))
+
+;8.44 - TREE-DEPTH, where a root-only tree is 1
+(defun tree-depth (list)
+  (cond ((atom list) 0)
+        (t (+ 1 (max (tree-depth (car list)) (tree-depth (cdr list)))))))
+
+;8.45 - PAREN-DEPTH - returns the maximum parentheses depth of a nested list
+; WARN - solve with car/cdr recursion, but they're not symmetric
+(defun paren-depth (list)
+  (cond ((atom list) 1)
+        (t (max (+ 1 paren-depth (car list)) (paren-depth (cdr list))))))
+
+;8.46 - COUNT-UP with append
+(defun count-up (n)
+  (cond ((= n 0) (list 0))
+        (t (append (count-up(- n 1)) (list n)))))
+
+;8.47 MAKE-LOAF - n Xs, using IF statement
+(defun make-loaf(n)
+  (if (= n 0) nil (cons 'X (make-loaf(- n 1)))))
+
+;8.48 BURY a symbol under n levels of parentheses
+(defun bury (sym n)
+  (cond ((= n 1) (list sym))
+  (t (list (bury sym (- n 1))))))
+
+;8.49 - PAIRINGS - assume 2 lists of equal length
+; e.g., (a b c) (1 2 3) -> ((a 1)(b 2)(c 3))
+(defun pairings (l1 l2)
+  (cond ((null l1) nil)
+        (t (cons (list (car l1) (car l2)) (pairings (cdr l1) (cdr l2))))))
+
+;8.50 - SUBLISTS - a list of subsequent cdr of a list
+(defun sublists (list)
+  (cond ((null list) nil)
+    (t (cons list (sublists (cdr list))))))
+
+;8.51 - MY-REVERSE - with helping function and recursive function of 2 inputs
+(defun my-reverse (list)
+  (reverse-helper list (length list)))
+
+(defun reverse-helper (list cnt)
+  (cond ((= cnt 1) list)
+      (t (append (reverse-helper (cdr list) (- cnt 1)) (list (car list))))))
+
+;8.52 - MY-UNION, recursive version
+(defun my-union (l1 l2)
+  (cond ((null l1) l2)
+        ((my-member (car l1) l2) (my-union (cdr l1) l2))
+        (t (append (list (car l1)) (my-union (cdr l1) l2)))))
+
+;8.53 LARGEST-EVEN, using MAX
+(defun largest-even (list)
+  (cond ((null list) 0)
+        ((evenp (car list)) (max (car list) (largest-even (cdr list))))
+        (t (largest-even (cdr list)))))
+
+;8.54 - HUGE - returns number to its own power (no REDUCE allowed)
+(defun huge (n)
+  (huge-helper n n))
+
+(defun huge-helper (n cnt)
+  (cond ((= cnt 0) 1)
+        (t (* n (huge-helper n (- cnt 1))))))
