@@ -242,3 +242,30 @@
 (defun huge-helper (n cnt)
   (cond ((= cnt 0) 1)
         (t (* n (huge-helper n (- cnt 1))))))
+
+;8.56 EVERY-OTHER (1st, 3rd, 5th, etc.)
+(defun every-other (list)
+  (every-other-helper list (length list)))
+
+(defun every-other-helper (list cnt)
+  (cond ((= cnt 1)  list)
+        ((oddp cnt) (cons (car list) (every-other-helper (cdr list) (- cnt 1))))
+        (t (every-other-helper (cdr list) (- cnt 1)))))
+
+;8.57 LEFT-HALF - returns first n/2 items, rounded up
+;LENGTH is allowed; REVERSE is not
+(defun left-half (list)
+  (left-half-helper list 0 (round (/ (length list) 2))))
+
+(defun left-half-helper (list index cnt)
+  (cond ((= index cnt)  nil)
+    (t (cons (nth index list) (left-half-helper list (+ index 1) cnt)))))
+
+;8.58 MERGE-LIST, takes in 2 lists; merge in order
+(defun merge-list (l1 l2)
+  (cond
+    ((null l1) l2)
+    ((null l2) l1)
+    ((< (car l1) (car l2)) (cons (car l1) (merge-list (cdr l1) l2)))
+    ((> (car l1) (car l2)) (cons (car l2) (merge-list l1 (cdr l2))))
+    (t (cons (car l1) (car l2) (merge-list (cdr l1) (cdr l2))))))
