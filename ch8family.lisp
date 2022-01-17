@@ -55,4 +55,23 @@
 (defun siblings (name)
   (remove name (union (children (mother name)) (children (father name)))))
 
-;
+;8.60c MAPUNION - applicative function that: a) takes a function and list as input,
+; and, b) computes union of all the results; use 2 existing applicative operators
+(defun mapunion (fn lists)
+  (remove-duplicates (reduce #'append (mapcar fn lists))))
+
+;8.60d GRANDPARENTS - use MAPUNION
+(defun grandparents (name)
+  (mapunion #'parents (parents name)))
+
+;8.60e COUSINS - use mapunion - return 1st cousins
+; (children of any of parents' siblings)
+(defun cousins (name)
+  (mapunion #'children (mapunion #'siblings (parents name))))
+
+;8.60f DESCENDED-FROM, 2 input, T if first person is descended from the second
+; recursive - you are descended from someone if (base) they're your parents,
+; or if (recursive function) either father or mother is descended from them
+(defun descended-from (descendant ancestor)
+  (cond
+    ))
